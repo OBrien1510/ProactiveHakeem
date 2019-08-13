@@ -8,5 +8,5 @@ while True:
 
     p.checkUserActivity()
     print("waiting")
-    time.sleep(60)
+    time.sleep(60*60*24)
 

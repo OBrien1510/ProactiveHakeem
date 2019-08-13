@@ -24,7 +24,7 @@ class ProactiveApi:
         for user in self.user_col.find({"cookie.Address.ChannelId": "skype"}):
 
             interest = user["interests"]
-            print("user", user)
+            print("user", user["Name"])
             # last = datetime.datetime.fromtimestamp(user["lastActive"])
             last = user["lastActive"]
             time_since = datetime.datetime.now() - last
