@@ -76,7 +76,7 @@ class ProactiveApi:
             past = int(time.time()) - datetime.timedelta(seconds=60*60*timeout*5).total_seconds()
             #past = datetime.datetime.utcnow() - datetime.timedelta(days=28)
 
-            courses = self.course_col.find({"Added": {"$gt": past}})
+            courses = self.course_col.find({"lastUpdated": {"$gt": past}})
             print("courses", courses.count())
             # return courses that have been added in the past 4 weeks
             timeout += 1
@@ -84,6 +84,3 @@ class ProactiveApi:
 
         print("returning courses")
         return courses
-
-
-
