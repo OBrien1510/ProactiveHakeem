@@ -28,10 +28,12 @@ class ProactiveApi:
             # last = datetime.datetime.fromtimestamp(user["lastActive"])
             last = user["lastActive"]
             time_since = datetime.datetime.now() - last
+            # if user hasn't been active in a year, delete their user profile
+            if time_since.days >= 365:
+                self.user_col.delete_one({"User_id": user["User_id"]})
 
             # if user has been notified in a while and hasn't been talking to the bot in the past 10 minutes
-            print("time since", time_since.total_seconds())
-            if user["lastNotified"] >= user["Notification"] and time_since.total_seconds() >= 3000:
+            elif user["lastNotified"] >= user["Notification"] and time_since.total_seconds() >= 3000:
                 self.user_col.find_one_and_update({"User_id": user["User_id"]}, {"$set": {"lastNotified": 0}})
                 courses = self.getnewCourses()
                 if courses.count() == 0:
