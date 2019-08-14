@@ -65,6 +65,15 @@ class ProactiveApi:
 
                         return
 
+                # if none of the courses match the user interests then pass the failure payload to the bot
+                payload = {
+                    "Text": "fail",
+                    "From": {"id": user["User_id"]}
+                }
+                print("Posting", payload)
+                requests.post(self.host, json=payload, headers={"Content-Type": "application/json"})
+                return
+
             elif user["lastNotified"] < user["Notification"]:
 
                 self.user_col.update({"User_id": user["User_id"]}, {"$inc": {"lastNotified": 1 }})
