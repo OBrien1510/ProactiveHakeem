@@ -65,6 +65,10 @@ class ProactiveApi:
 
                         return
 
+            elif user["lastNotified"] < user["Notification"]:
+
+                user_col.update({"User_id": user["User_id"]}, {"$inc"{"lastNotified": 1 }})
+
 
 
     def getnewCourses(self):
