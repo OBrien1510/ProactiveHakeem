@@ -46,8 +46,8 @@ class ProactiveApi:
                     requests.post(self.host, json=payload, headers={"Content-Type": "application/json"})
                     return
 
-                for course in self.getnewCourses():
-
+                for course in courses:
+                    print(course["topic"])
                     if course["topic"] in interest:
 
                         # if there is a newish course that matches a user's interest, then send a notification and break
@@ -67,7 +67,7 @@ class ProactiveApi:
 
             elif user["lastNotified"] < user["Notification"]:
 
-                user_col.update({"User_id": user["User_id"]}, {"$inc"{"lastNotified": 1 }})
+                self.user_col.update({"User_id": user["User_id"]}, {"$inc": {"lastNotified": 1 }})
 
 
 
@@ -76,7 +76,7 @@ class ProactiveApi:
 
         course_len = 0
         timeout = 0
-        while course_len == 0 or timeout <= 10:
+        while course_len == 0 and timeout <= 10:
             past = int(time.time()) - datetime.timedelta(seconds=60*60*timeout*5).total_seconds()
             #past = datetime.datetime.utcnow() - datetime.timedelta(days=28)
 
