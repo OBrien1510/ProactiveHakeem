@@ -21,7 +21,7 @@ class ProactiveApi:
 
     def checkUserActivity(self):
 
-        for user in self.user_col.find({"cookie.Address.ChannelId": "skype"}):
+        for user in self.user_col.find({"conversationReference.ChannelId": "skype"}):
 
             interest = user["interests"]
             print("user", user["Name"])
